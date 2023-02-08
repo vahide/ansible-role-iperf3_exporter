@@ -1,0 +1,7 @@
+---
+- name: restart iperf3_exporter
+  become: true
+  systemd:
+    daemon_reload: true
+    name: iperf3_exporter
+    state: restarted

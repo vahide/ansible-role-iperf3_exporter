@@ -1,0 +1,8 @@
+---
+- name: Run role
+  hosts: all
+  any_errors_fatal: true
+  roles:
+    - ansible-iperf3_exporter
+  vars:
+    iperf3_exporter_binary_local_dir: "/tmp/iperf3_exporter-linux-amd64"

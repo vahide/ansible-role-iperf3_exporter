@@ -1,0 +1,34 @@
+---
+galaxy_info:
+  author: Vahideh Alinouri<vahideh.alinouri@gmail.com>
+  description: Deploy iperf3_exporter
+  role_name: ansible-iperf3_exporter
+  license: MIT
+  company: none
+  min_ansible_version: 2.7
+  platforms:
+    - name: Ubuntu
+      versions:
+        - bionic
+        - xenial
+    - name: Debian
+      versions:
+        - stretch
+        - buster
+    - name: EL
+      versions:
+        - 7
+        - 8
+    - name: Fedora
+      versions:
+        - 30
+        - 31
+  galaxy_tags:
+    - monitoring
+    - ansible_role
+    - iperf3_exporter
+    - prometheus
+    - exporter
+    - iperf3
+
+dependencies: []

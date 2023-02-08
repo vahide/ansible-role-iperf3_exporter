@@ -1,0 +1,36 @@
+---
+- name: Prepare
+  hosts: localhost
+  gather_facts: false
+  vars:
+    go_arch: amd64
+  tasks:
+    - name: Download iperf3_exporter binary to local folder
+      become: false
+      get_url:
+        url: "https://github.com/edgard/iperf3_exporter/releases/download/v{{ iperf3_exporter_version }}/iperf3_exporter-{{ iperf3_exporter_version }}.linux-{{ go_arch }}.tar.gz"
+        dest: "/tmp/iperf3_exporter-{{ iperf3_exporter_version }}.linux-{{ go_arch }}.tar.gz"
+      register: _download_binary
+      until: _download_binary is succeeded
+      retries: 5
+      delay: 2
+      run_once: true
+      check_mode: false
+
+    - name: Unpack iperf3_exporter binary
+      become: false
+      unarchive:
+        src: "/tmp/iperf3_exporter-{{ iperf3_exporter_version }}.linux-{{ go_arch }}.tar.gz"
+        dest: "/tmp"
+        creates: "/tmp/iperf3_exporter-{{ iperf3_exporter_version }}.linux-{{ go_arch }}/iperf3_exporter"
+      run_once: true
+      check_mode: false
+
+    - name: link to iperf3_exporter binaries directory
+      become: false
+      file:
+        src: "/tmp/iperf3_exporter-{{ iperf3_exporter_version }}.linux-amd64"
+        dest: "/tmp/iperf3_exporter-linux-amd64"
+        state: link
+      run_once: true
+      check_mode: false

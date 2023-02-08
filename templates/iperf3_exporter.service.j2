@@ -1,0 +1,38 @@
+{{ ansible_managed | comment }}
+
+[Unit]
+Description= Prometheus Iperf3 Exporter
+After=network-online.target
+StartLimitInterval=0
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User={{ _iperf3_exporter_system_user }}
+Group={{ _iperf3_exporter_system_group }}
+ExecStart=/usr/local/bin/iperf3_exporter \
+  --web.listen-address={{ iperf3_exporter_web_listen_address }}
+
+SyslogIdentifier=iperf3_exporter
+Restart=always
+RestartSec=1
+PrivateTmp=yes
+{% for m in ansible_mounts if m.mount == '/home' %}
+ProtectHome=read-only
+{% else %}
+ProtectHome=yes
+{% endfor %}
+NoNewPrivileges=yes
+
+{% if iperf3_exporter_systemd_version | int >= 232 %}
+ProtectSystem=strict
+ProtectControlGroups=true
+ProtectKernelModules=true
+ProtectKernelTunables=yes
+{% else %}
+ProtectSystem=full
+{% endif %}
+
+[Install]
+WantedBy=multi-user.target
+

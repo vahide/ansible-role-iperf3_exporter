@@ -1,0 +1,36 @@
+---
+- import_tasks: preflight.yml
+  tags:
+    - iperf3_exporter_install
+    - iperf3_exporter_configure
+    - iperf3_exporter_run
+
+- import_tasks: install.yml
+  become: true
+  when:
+    ( not __iperf3_exporter_is_installed.stat.exists ) or
+    ((__iperf3_exporter_current_version_output.stderr_lines | length > 0) and (__iperf3_exporter_current_version_output.stderr_lines[0].split(" ")[2] != iperf3_exporter_version )) or
+    ( iperf3_exporter_binary_local_dir | length > 0 )
+  tags:
+    - iperf3_exporter_install
+
+- import_tasks: selinux.yml
+  become: true
+  when: ansible_selinux.status == "enabled"
+  tags:
+    - iperf3_exporter_configure
+
+- import_tasks: configure.yml
+  become: true
+  tags:
+    - iperf3_exporter_configure
+
+- name: Ensure Iperf3 Exporter is enabled on boot
+  become: true
+  systemd:
+    daemon_reload: true
+    name: iperf3_exporter
+    enabled: true
+    state: started
+  tags:
+    - iperf3_exporter_run
