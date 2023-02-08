@@ -2,7 +2,7 @@
 galaxy_info:
   author: Vahideh Alinouri<vahideh.alinouri@gmail.com>
   description: Deploy iperf3_exporter
-  role_name: ansible-iperf3_exporter
+  role_name: ansible-role-iperf3_exporter
   license: MIT
   company: none
   min_ansible_version: 2.7
