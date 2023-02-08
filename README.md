@@ -1,6 +1,6 @@
 # Description
 
-Deploy prometheus iperf3 exporter using ansible.
+Deploy prometheus [iperf3_exporter](https://github.com/edgard/iperf3_exporter) using ansible.
 
 ## Role Variables
 All variables which can be overridden are stored in defaults/main.yml file.
