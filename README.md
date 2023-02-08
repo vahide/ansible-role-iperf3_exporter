@@ -40,4 +40,4 @@ iperf3_received_bytes / iperf3_received_seconds * 8 / 1000000
 
 ## License
 
-Apache License 2.0, see [LICENSE](https://github.com/).
+Apache License 2.0, see [LICENSE](https://github.com/vahide/ansible-role-iperf3_exporter/blob/main/LICENSE).
